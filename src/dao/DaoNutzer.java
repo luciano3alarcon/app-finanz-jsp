@@ -56,7 +56,6 @@ public class DaoNutzer {
 			beanFinanzNutzer.setPassword(resultSet.getString("passwort"));
 			beanFinanzNutzer.setId(resultSet.getLong("id"));
 			beanFinanzNutzer.setName(resultSet.getString("name"));
-
 			liste.add(beanFinanzNutzer);
 		}
 
@@ -83,7 +82,7 @@ public class DaoNutzer {
 		}
 	}
 
-	public BeanFinanzJsp editieren(String login) throws Exception {
+	public BeanFinanzJsp consulta(String login) throws Exception {
 
 		String sql = "SELECT * FROM finappuser WHERE login = '" + login + "';";
 
@@ -105,9 +104,8 @@ public class DaoNutzer {
 
 	public void update(BeanFinanzJsp nutzer) {
 
-		String abfrage = "UPDATE public.finappuser SET login=?, passwort=?, id=?, name=? 	WHERE  id= "
-				+ nutzer.getId() + " ; ";
-
+		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=? 	WHERE  id= " + nutzer.getId()
+				+ " ; ";
 		try {
 			PreparedStatement statement = connection.prepareStatement(abfrage);
 			statement.setString(1, nutzer.getLogin());
@@ -115,6 +113,7 @@ public class DaoNutzer {
 			statement.setLong(3, nutzer.getId());
 			statement.setString(4, nutzer.getName());
 
+			statement.executeUpdate();
 			connection.commit();
 
 		} catch (Exception e) {

@@ -36,15 +36,15 @@ public class Nutzer extends HttpServlet {
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
 				request.setAttribute("liste", this.daoNutzer.aufgelisteteNutzer());
 				view.forward(request, response);
-				
+
 			} else if (acao.equalsIgnoreCase("editieren")) {
 				
-				BeanFinanzJsp beanEdit = this.daoNutzer.editieren(user);
+				BeanFinanzJsp beanEdit = this.daoNutzer.consulta(user);
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
 				request.setAttribute("user", beanEdit);
 				view.forward(request, response);
-				
-//				this.daoNutzer.update(beanEdit );
+
+				this.daoNutzer.update(beanEdit);
 			}
 
 		} catch (Exception e) {
@@ -55,14 +55,23 @@ public class Nutzer extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String id = request.getParameter("id");
 		String login = request.getParameter("login");
 		String passwort = request.getParameter("password");
+		String name = request.getParameter("name");
 
 		BeanFinanzJsp nutzer = new BeanFinanzJsp();
+		nutzer.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
 		nutzer.setLogin(login);
 		nutzer.setPassword(passwort);
+		nutzer.setName(name);
 
-		this.daoNutzer.nutzerSpeichernDB(nutzer);
+		if (id == null || id.isEmpty()) {
+			this.daoNutzer.nutzerSpeichernDB(nutzer);
+			
+		} else {
+			this.daoNutzer.update(nutzer);
+		}
 
 		try {
 			RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");

@@ -27,7 +27,7 @@
 					<!-- erste Spalte Nutzerid-->
 					<tr>
 						<td>Userid:</td>
-						<td><input type="text" id="id" name="id" value="${user.id}"></td>
+						<td><input type="text" readonly="readonly" id="id" name="id" value="${user.id}"></td>
 					</tr>
 					<tr>
 						<!-- zweite Spalte Nutzername-->
@@ -73,18 +73,12 @@
 					<td style="width: 150px"><c:out value="${user.login}" /></td>
 					<td><c:out value="${user.password}" /></td>
 					<td><c:out value="${user.name}" /></td>
-					<td><a
-						href="speichernNutzer?acao=editieren&user=${user.login}"><img
-							title="Editieren" src="resources/img/edit_button.png"
-							width="20px" height="20"> </a></td>
-					<td><a href="speichernNutzer?acao=loeschen&user=${user.login}"><img
-							title="Löschen" src="resources/img/delete-button.png"
-							width="20px" height="20"></a></td>
+					<td><a href="speichernNutzer?acao=editieren&user=${user.login}"><img title="Editieren" src="resources/img/edit_button.png" width="20px" height="20"> </a></td>
+					<td><a href="speichernNutzer?acao=loeschen&user=${user.login}"><img title="Löschen" src="resources/img/delete-button.png"  width="20px" height="20"></a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
-
 
 </body>
 </html>
