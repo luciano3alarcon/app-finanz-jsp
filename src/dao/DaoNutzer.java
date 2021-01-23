@@ -62,11 +62,11 @@ public class DaoNutzer {
 		return liste;
 	}
 
-	public void loeschen(String login) {
+	public void loeschen(String id) {
 
 		try {
 
-			String sql = "DELETE FROM finappuser WHERE login = '" + login + "';";
+			String sql = "DELETE FROM finappuser WHERE id = '" + id + "';";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.execute();
 
@@ -82,9 +82,9 @@ public class DaoNutzer {
 		}
 	}
 
-	public BeanFinanzJsp consulta(String login) throws Exception {
+	public BeanFinanzJsp consulta(String id) throws Exception {
 
-		String sql = "SELECT * FROM finappuser WHERE login = '" + login + "';";
+		String sql = "SELECT * FROM finappuser WHERE id = '" + id + "';";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet result = statement.executeQuery();

@@ -19,7 +19,7 @@
 		<h1>Registrierung</h1>
 	</center>
 
-	<form action="speichernNutzer" method="post">
+	<form action="speichernNutzer" method="post" id="formUser" >
 		<!-- 	 Hier werde ich eine Tabelle erstellen -->
 		<ul class="form-style-1">
 			<li>
@@ -49,7 +49,8 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Speichern" /></td>
+						<td><input type="submit" value="Speichern" />
+						<input type="submit" value="Abbrechen" onclick="document.getElementById('formUser').action='speichernNutzer?acao=reset"/></td>
 					</tr>
 				</table>
 			</li>
@@ -62,7 +63,6 @@
 			<tr>
 				<th>Id</th>
 				<th>Nutzername</th>
-				<th>Passwort</th>
 				<th>Name</th>
 				<th>Editieren</th>
 				<th>Löschen</th>
@@ -71,10 +71,9 @@
 				<tr>
 					<td style="width: 150px"><c:out value="${user.id}" /></td>
 					<td style="width: 150px"><c:out value="${user.login}" /></td>
-					<td><c:out value="${user.password}" /></td>
 					<td><c:out value="${user.name}" /></td>
-					<td><a href="speichernNutzer?acao=editieren&user=${user.login}"><img title="Editieren" src="resources/img/edit_button.png" width="20px" height="20"> </a></td>
-					<td><a href="speichernNutzer?acao=loeschen&user=${user.login}"><img title="Löschen" src="resources/img/delete-button.png"  width="20px" height="20"></a></td>
+					<td><a href="speichernNutzer?acao=editieren&user=${user.id }"><img title="Editieren" src="resources/img/edit_button.png" width="20px" height="20px"> </a></td>
+					<td><a href="speichernNutzer?acao=loeschen&user=${user.id}"><img title="Löschen" src="resources/img/delete-button.png"  width="20px" height="20px"></a></td>
 				</tr>
 			</c:forEach>
 		</table>

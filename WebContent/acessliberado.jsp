@@ -12,6 +12,6 @@
 	<br/>
 	<h2> Willkomen zum JSP-System! </h2>
 	
-	<a href= "nutzerregistrierung.jsp"> Link zur Registrierung</a>
+	<a href= "speichernNutzer?acao=listartodos"> Link zur Registrierung</a>
 </body>
 </html>
