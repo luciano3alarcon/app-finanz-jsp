@@ -79,21 +79,30 @@ public class Nutzer extends HttpServlet {
 			String login = request.getParameter("login");
 			String passwort = request.getParameter("password");
 			String name = request.getParameter("name");
+			String rufnummer = request.getParameter("rufnummer");
+			String email = request.getParameter("email");
 
 			BeanFinanzJsp nutzer = new BeanFinanzJsp();
 			nutzer.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
 			nutzer.setLogin(login);
 			nutzer.setPassword(passwort);
 			nutzer.setName(name);
+			nutzer.setRufnummer(rufnummer);
+			nutzer.setEmail(email);
 
 			try {
-			/* hier wird ein Nutzter erstellt*/
-			if (id == null || id.isEmpty() && this.daoNutzer.validateLogin(login)  ) {
-				this.daoNutzer.nutzerSpeichernDB(nutzer);
 
-			} else if (id != null && !id.isEmpty() ){
-				this.daoNutzer.update(nutzer);
-			}
+				if (id == null || id.isEmpty() && !this.daoNutzer.validateLogin(login)) {
+					request.setAttribute("message", "Nutzername wird bereits verwendet.");
+				}
+
+				/* hier wird ein Nutzter erstellt */
+				if (id == null || id.isEmpty() && this.daoNutzer.validateLogin(login)) {
+					this.daoNutzer.nutzerSpeichernDB(nutzer);
+
+				} else if (id != null && !id.isEmpty()) {
+					this.daoNutzer.update(nutzer);
+				}
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
 				request.setAttribute("liste", this.daoNutzer.aufgelisteteNutzer());
 				view.forward(request, response);

@@ -21,12 +21,14 @@ public class DaoNutzer {
 	public void nutzerSpeichernDB(BeanFinanzJsp nutzer) { // Das Objekt Bean hat Login und Passwort
 
 		try {
-			String sql = "INSERT INTO finappuser(name, login, passwort) VALUES (?, ?, ?);";
+			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email) VALUES (?, ?, ?, ?, ?);";
 
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, nutzer.getLogin());
 			insert.setString(2, nutzer.getPassword());
 			insert.setString(3, nutzer.getName());
+			insert.setString(4, nutzer.getRufnummer());
+			insert.setString(5, nutzer.getEmail());
 			insert.execute();
 
 			connection.commit();
@@ -56,6 +58,8 @@ public class DaoNutzer {
 			beanFinanzNutzer.setPassword(resultSet.getString("passwort"));
 			beanFinanzNutzer.setId(resultSet.getLong("id"));
 			beanFinanzNutzer.setName(resultSet.getString("name"));
+			beanFinanzNutzer.setRufnummer(resultSet.getString("rufnummer"));
+			beanFinanzNutzer.setEmail("email");
 			liste.add(beanFinanzNutzer);
 		}
 
@@ -106,10 +110,12 @@ public class DaoNutzer {
 		if (result.next()) {
 
 			BeanFinanzJsp beanObj = new BeanFinanzJsp();
-			beanObj.setId(result.getLong("id"));
-			beanObj.setName(result.getString("name"));
 			beanObj.setLogin(result.getString("login"));
 			beanObj.setPassword(result.getString("passwort"));
+			beanObj.setId(result.getLong("id"));
+			beanObj.setName(result.getString("name"));			
+			beanObj.setRufnummer(result.getString("rufnummer"));
+			beanObj.setEmail(result.getString("email"));
 
 			return beanObj;
 		}
@@ -118,15 +124,15 @@ public class DaoNutzer {
 
 	public void update(BeanFinanzJsp nutzer) {
 
-		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=? 	WHERE  id= " + nutzer.getId()
-				+ " ; ";
+		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=?, rufnummer= ?, email= ? WHERE  id= " + nutzer.getId() + " ; ";
 		try {
 			PreparedStatement statement = connection.prepareStatement(abfrage);
 			statement.setString(1, nutzer.getLogin());
 			statement.setString(2, nutzer.getPassword());
 			statement.setLong(3, nutzer.getId());
 			statement.setString(4, nutzer.getName());
-
+			statement.setString(5, nutzer.getRufnummer());
+			statement.setString(6, nutzer.getEmail());
 			statement.executeUpdate();
 			connection.commit();
 

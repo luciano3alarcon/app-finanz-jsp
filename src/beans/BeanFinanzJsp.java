@@ -6,6 +6,8 @@ public class BeanFinanzJsp {
 	private String password;
 	private Long id;
 	private String name;
+	private String rufnummer;
+	private String email;
 
 	public void setName(String name) {
 		this.name = name;
@@ -39,4 +41,20 @@ public class BeanFinanzJsp {
 		this.password = password;
 	}
 
+	public void setRufnummer(String rufnummer) {
+		this.rufnummer = rufnummer;
+	}
+
+	public String getRufnummer() {
+		return this.rufnummer;
+	}
+	
+	public void setEmail (String email) {
+		this.email = email;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+	
 }

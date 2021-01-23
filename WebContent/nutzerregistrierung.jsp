@@ -17,9 +17,12 @@
 	<br>
 	<center>
 		<h1>Registrierung</h1>
+		<!-- 	Fehlermeldung muss angepasst werden -->
+		<h1 style="color: red"; >${message}</h1>
 	</center>
 
-	<form action="speichernNutzer" method="post" id="formUser" >
+	<!-- Formular  -->
+	<form action="speichernNutzer" method="post" id="formUser">
 		<!-- 	 Hier werde ich eine Tabelle erstellen -->
 		<ul class="form-style-1">
 			<li>
@@ -27,7 +30,8 @@
 					<!-- erste Spalte Nutzerid-->
 					<tr>
 						<td>Userid:</td>
-						<td><input type="text" readonly="readonly" id="id" name="id" value="${user.id}"></td>
+						<td><input type="text" readonly="readonly" id="id" name="id"
+							value="${user.id}"></td>
 					</tr>
 					<tr>
 						<!-- zweite Spalte Nutzername-->
@@ -48,14 +52,26 @@
 							value="${user.name}"></td>
 					</tr>
 					<tr>
+						<td>Rufnummer:</td>
+						<td><input type="text" id="rufnummer" name="rufnummer"
+							value="${user.rufnummer}"></td>
+					<tr>
+					<tr>
+						<td>E-Mail:</td>
+						<td><input type="text" id="email" name="email" value="${user.email}" ></td>
+					</tr>
+					<tr>
 						<td></td>
-						<td><input type="submit" value="Speichern" />
-						<input type="submit" value="Abbrechen" onclick="document.getElementById('formUser').action='speichernNutzer?acao=reset"/></td>
+						<td><input type="submit" value="Speichern" /> <input
+							type="submit" value="Abbrechen"
+							onclick="document.getElementById('formUser').action='speichernNutzer?acao=reset" /></td>
 					</tr>
 				</table>
 			</li>
 		</ul>
 	</form>
+
+	<!-- Tabelle -->
 
 	<div id="wrapper">
 		<table id="keywords" cellspacing="0" cellpadding="0">
@@ -64,6 +80,8 @@
 				<th>Id</th>
 				<th>Nutzername</th>
 				<th>Name</th>
+				<th>Rufnummer</th>
+				<th>E-Mail</th>
 				<th>Editieren</th>
 				<th>Löschen</th>
 			</tr>
@@ -71,9 +89,16 @@
 				<tr>
 					<td style="width: 150px"><c:out value="${user.id}" /></td>
 					<td style="width: 150px"><c:out value="${user.login}" /></td>
-					<td><c:out value="${user.name}" /></td>
-					<td><a href="speichernNutzer?acao=editieren&user=${user.id }"><img title="Editieren" src="resources/img/edit_button.png" width="20px" height="20px"> </a></td>
-					<td><a href="speichernNutzer?acao=loeschen&user=${user.id}"><img title="Löschen" src="resources/img/delete-button.png"  width="20px" height="20px"></a></td>
+					<td style="width: 150px"><c:out value="${user.name}" /></td>			
+					<td style="width: 150px"><c:out value="${user.rufnummer}"/></td>
+					<td style="width: 150px"><c:out value="${user.email}"/></td>
+
+					<td><a href="speichernNutzer?acao=editieren&user=${user.id }"><img
+							title="Editieren" src="resources/img/edit_button.png"
+							width="20px" height="20px"> </a></td>
+					<td><a href="speichernNutzer?acao=loeschen&user=${user.id}"><img
+							title="Löschen" src="resources/img/delete-button.png"
+							width="20px" height="20px"></a></td>
 				</tr>
 			</c:forEach>
 		</table>
