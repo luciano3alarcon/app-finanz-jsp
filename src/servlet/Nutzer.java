@@ -86,14 +86,14 @@ public class Nutzer extends HttpServlet {
 			nutzer.setPassword(passwort);
 			nutzer.setName(name);
 
-			if (id == null || id.isEmpty()) {
+			try {
+			/* hier wird ein Nutzter erstellt*/
+			if (id == null || id.isEmpty() && this.daoNutzer.validateLogin(login)  ) {
 				this.daoNutzer.nutzerSpeichernDB(nutzer);
 
-			} else {
+			} else if (id != null && !id.isEmpty() ){
 				this.daoNutzer.update(nutzer);
 			}
-
-			try {
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
 				request.setAttribute("liste", this.daoNutzer.aufgelisteteNutzer());
 				view.forward(request, response);

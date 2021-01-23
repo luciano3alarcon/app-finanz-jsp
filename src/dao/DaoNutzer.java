@@ -82,6 +82,20 @@ public class DaoNutzer {
 		}
 	}
 
+	public boolean validateLogin (String login) throws Exception {
+
+		String sql = "SELECT COUNT (1) as anzahl from finappuser WHERE login= '" + login + "';";
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet result = statement.executeQuery();
+
+		if (result.next()) {	
+			return result.getInt("anzahl")  <= 0; /*Hier wird ein True erwartet.*/
+		}
+		
+		return false;
+	}
+	
 	public BeanFinanzJsp consulta(String id) throws Exception {
 
 		String sql = "SELECT * FROM finappuser WHERE id = '" + id + "';";
