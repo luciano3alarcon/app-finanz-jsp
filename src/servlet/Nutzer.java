@@ -17,7 +17,7 @@ public class Nutzer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private DaoNutzer daoNutzer = new DaoNutzer();
-
+	
 	public Nutzer() {
 		super();
 	}
@@ -31,8 +31,8 @@ public class Nutzer extends HttpServlet {
 			String user = request.getParameter("user");
 
 			if (acao.equalsIgnoreCase("loeschen")) {
-				this.daoNutzer.loeschen(user);
-
+				this.daoNutzer.loeschen(user);		
+				
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
 				request.setAttribute("liste", this.daoNutzer.aufgelisteteNutzer());
 				view.forward(request, response);
@@ -103,6 +103,7 @@ public class Nutzer extends HttpServlet {
 				} else if (id != null && !id.isEmpty()) {
 					this.daoNutzer.update(nutzer);
 				}
+
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
 				request.setAttribute("liste", this.daoNutzer.aufgelisteteNutzer());
 				view.forward(request, response);

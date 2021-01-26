@@ -13,6 +13,7 @@ import connection.SingleConnection;
 public class DaoNutzer {
 
 	private static Connection connection;
+	BeanFinanzJsp nutzer = new BeanFinanzJsp();
 
 	public DaoNutzer() {
 		connection = SingleConnection.getConnection();
@@ -66,16 +67,18 @@ public class DaoNutzer {
 		return liste;
 	}
 
-	public void loeschen(String id) {
+	public void loeschen(String id) throws Exception {
 
 		try {
+ 
+			if (IsAdmin(id)) {
+				String sql = "DELETE FROM finappuser WHERE id = '" + id + "';";
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.execute();
 
-			String sql = "DELETE FROM finappuser WHERE id = '" + id + "';";
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.execute();
-
-			connection.commit();
-
+				connection.commit();			
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			try {
@@ -84,22 +87,23 @@ public class DaoNutzer {
 				e1.printStackTrace();
 			}
 		}
+		
 	}
 
-	public boolean validateLogin (String login) throws Exception {
+	public boolean validateLogin(String login) throws Exception {
 
 		String sql = "SELECT COUNT (1) as anzahl from finappuser WHERE login= '" + login + "';";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet result = statement.executeQuery();
 
-		if (result.next()) {	
-			return result.getInt("anzahl")  <= 0; /*Hier wird ein True erwartet.*/
+		if (result.next()) {
+			return result.getInt("anzahl") <= 0; /* Hier wird ein True erwartet. */
 		}
-		
+
 		return false;
 	}
-	
+
 	public BeanFinanzJsp consulta(String id) throws Exception {
 
 		String sql = "SELECT * FROM finappuser WHERE id = '" + id + "';";
@@ -113,7 +117,7 @@ public class DaoNutzer {
 			beanObj.setLogin(result.getString("login"));
 			beanObj.setPassword(result.getString("passwort"));
 			beanObj.setId(result.getLong("id"));
-			beanObj.setName(result.getString("name"));			
+			beanObj.setName(result.getString("name"));
 			beanObj.setRufnummer(result.getString("rufnummer"));
 			beanObj.setEmail(result.getString("email"));
 
@@ -124,7 +128,8 @@ public class DaoNutzer {
 
 	public void update(BeanFinanzJsp nutzer) {
 
-		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=?, rufnummer= ?, email= ? WHERE  id= " + nutzer.getId() + " ; ";
+		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=?, rufnummer= ?, email= ? WHERE  id= "
+				+ nutzer.getId() + " ; ";
 		try {
 			PreparedStatement statement = connection.prepareStatement(abfrage);
 			statement.setString(1, nutzer.getLogin());
@@ -144,6 +149,24 @@ public class DaoNutzer {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	public boolean IsAdmin(String id) throws Exception {
+
+		String sql = "SELECT COUNT (1) as anzahlAdmin from finappuser WHERE id = '" + id + "' AND login= 'admin';";
+		boolean isAdmin = false;
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet result = statement.executeQuery();
+
+		if (result.next()) {
+			if (result.getInt("anzahlAdmin") <= 0) {
+				isAdmin = true;
+			} else {
+				isAdmin = false;
+			}
+		}
+		return isAdmin;
 	}
 
 }
