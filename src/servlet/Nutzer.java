@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.BeanFinanzJsp;
 import dao.DaoNutzer;
+import validator.IsPasswordValid;
 
 @WebServlet("/speichernNutzer")
 public class Nutzer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private DaoNutzer daoNutzer = new DaoNutzer();
-	
+	DaoNutzer daoNutzer = new DaoNutzer();
+	IsPasswordValid isPassValid = new IsPasswordValid();
+
 	public Nutzer() {
 		super();
 	}
@@ -31,8 +33,8 @@ public class Nutzer extends HttpServlet {
 			String user = request.getParameter("user");
 
 			if (acao.equalsIgnoreCase("loeschen")) {
-				this.daoNutzer.loeschen(user);		
-				
+				this.daoNutzer.loeschen(user);
+
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
 				request.setAttribute("liste", this.daoNutzer.aufgelisteteNutzer());
 				view.forward(request, response);
@@ -98,10 +100,21 @@ public class Nutzer extends HttpServlet {
 
 				/* hier wird ein Nutzter erstellt */
 				if (id == null || id.isEmpty() && this.daoNutzer.validateLogin(login)) {
-					this.daoNutzer.nutzerSpeichernDB(nutzer);
+					
+					if (!this.isPassValid.isValidPassword(passwort)) {
+						request.setAttribute("message", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
+					} else {
+						this.daoNutzer.nutzerSpeichernDB(nutzer);
+					}
 
 				} else if (id != null && !id.isEmpty()) {
-					this.daoNutzer.update(nutzer);
+
+					if (!this.daoNutzer.validateLoginUpdate(login, id)) {
+						request.setAttribute("message", "Dieser Username wird bereits verwendet.");
+
+					} else {
+						this.daoNutzer.update(nutzer);
+					}
 				}
 
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");

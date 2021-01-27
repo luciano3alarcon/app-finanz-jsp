@@ -9,6 +9,7 @@ import java.util.List;
 
 import beans.BeanFinanzJsp;
 import connection.SingleConnection;
+import validator.IsPasswordValid;
 
 public class DaoNutzer {
 
@@ -70,15 +71,15 @@ public class DaoNutzer {
 	public void loeschen(String id) throws Exception {
 
 		try {
- 
+
 			if (IsAdmin(id)) {
 				String sql = "DELETE FROM finappuser WHERE id = '" + id + "';";
 				PreparedStatement statement = connection.prepareStatement(sql);
 				statement.execute();
 
-				connection.commit();			
+				connection.commit();
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			try {
@@ -87,12 +88,26 @@ public class DaoNutzer {
 				e1.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	public boolean validateLogin(String login) throws Exception {
 
 		String sql = "SELECT COUNT (1) as anzahl from finappuser WHERE login= '" + login + "';";
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet result = statement.executeQuery();
+
+		if (result.next()) {
+			return result.getInt("anzahl") <= 0; /* Hier wird ein True erwartet. */
+		}
+
+		return false;
+	}
+
+	public boolean validateLoginUpdate(String login, String id) throws Exception {
+
+		String sql = "SELECT COUNT (1) as anzahl from finappuser WHERE login= '" + login + "' AND id <> " + id + " ;";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet result = statement.executeQuery();
@@ -153,6 +168,8 @@ public class DaoNutzer {
 
 	public boolean IsAdmin(String id) throws Exception {
 
+		/* Query in der DB mit Login und Id, zu überprüfen, ob die ID ein ADmin ist. */
+
 		String sql = "SELECT COUNT (1) as anzahlAdmin from finappuser WHERE id = '" + id + "' AND login= 'admin';";
 		boolean isAdmin = false;
 
@@ -167,6 +184,11 @@ public class DaoNutzer {
 			}
 		}
 		return isAdmin;
+	}
+
+	public boolean validPassword(String password) {
+
+		return true;
 	}
 
 }
