@@ -61,7 +61,7 @@ public class DaoNutzer {
 			beanFinanzNutzer.setId(resultSet.getLong("id"));
 			beanFinanzNutzer.setName(resultSet.getString("name"));
 			beanFinanzNutzer.setRufnummer(resultSet.getString("rufnummer"));
-			beanFinanzNutzer.setEmail("email");
+			beanFinanzNutzer.setEmail(resultSet.getString("email"));
 			liste.add(beanFinanzNutzer);
 		}
 
@@ -166,7 +166,7 @@ public class DaoNutzer {
 		}
 	}
 
-	public boolean IsAdmin(String id) throws Exception {
+	public boolean IsAdmin(String id) throws Exception { /* Darf nur bei Editieren benutzt werden*/
 
 		/* Query in der DB mit Login und Id, zu überprüfen, ob die ID ein ADmin ist. */
 
@@ -184,11 +184,6 @@ public class DaoNutzer {
 			}
 		}
 		return isAdmin;
-	}
-
-	public boolean validPassword(String password) {
-
-		return true;
 	}
 
 }

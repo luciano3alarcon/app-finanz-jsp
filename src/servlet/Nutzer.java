@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.BeanFinanzJsp;
 import dao.DaoNutzer;
+import validator.CheckEmail;
+import validator.CheckLogin;
+import validator.CheckPhone;
 import validator.IsPasswordValid;
 
 @WebServlet("/speichernNutzer")
@@ -19,6 +22,9 @@ public class Nutzer extends HttpServlet {
 
 	DaoNutzer daoNutzer = new DaoNutzer();
 	IsPasswordValid isPassValid = new IsPasswordValid();
+	CheckEmail ckechEmail = new CheckEmail();
+	CheckPhone checkPhone = new CheckPhone();
+	CheckLogin checkLogin = new CheckLogin();
 
 	public Nutzer() {
 		super();
@@ -94,26 +100,32 @@ public class Nutzer extends HttpServlet {
 
 			try {
 
-				if (id == null || id.isEmpty() && !this.daoNutzer.validateLogin(login)) {
-					request.setAttribute("message", "Nutzername wird bereits verwendet.");
-				}
-
 				/* hier wird ein Nutzter erstellt */
+				
 				if (id == null || id.isEmpty() && this.daoNutzer.validateLogin(login)) {
-					
-					if (!this.isPassValid.isValidPassword(passwort)) {
-						request.setAttribute("message", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
-					} else {
-						this.daoNutzer.nutzerSpeichernDB(nutzer);
+					if (this.checkLogin.isLoginValid(login) ) {
+						request.setAttribute("messageNutzerName", "Überprüfen Sie Ihren Nutzername."); 
+					}else if (!this.isPassValid.isValidPassword(passwort)) {
+						request.setAttribute("messagePass", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern."); 
+					}else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
+						request.setAttribute("messageEmail", "Diese E-Mailadresse ist ungültig.");
+					} else if (this.checkPhone.isPhoneValid(rufnummer)) {
+						request.setAttribute("messageRufnummer", "Überprüfen Sie Ihre Rufnummer");
+					}else {
+						this.daoNutzer.nutzerSpeichernDB(nutzer);	
 					}
 
 				} else if (id != null && !id.isEmpty()) {
-
-					if (!this.daoNutzer.validateLoginUpdate(login, id)) {
+					if (!this.daoNutzer.validateLoginUpdate(login, id)) {/* Login = Nutzername */
 						request.setAttribute("message", "Dieser Username wird bereits verwendet.");
-
-					} else {
-						this.daoNutzer.update(nutzer);
+					}else if (!this.isPassValid.isValidPassword(passwort)) {
+						request.setAttribute("message", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
+					} else if (this.checkPhone.isPhoneValid(rufnummer)) {
+						request.setAttribute("message", "Überprüfen Sie Ihre Rufnummer");
+					}else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
+						request.setAttribute("message", "Diese E-Mailadresse ist ungültig.");
+					}else {
+					this.daoNutzer.update(nutzer);
 					}
 				}
 

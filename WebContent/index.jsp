@@ -22,8 +22,8 @@
 	<div class="login-page">
 		<div class="form">
 			<form class="login-form" action="LoginServlet" method="post " class="login-form" >
-				Login: <input type="text" id="login" name="login" placeholder="username"> <br />
-				Pass: <input 	type="password" id="password" name="password" placeholder="passwort"><br />
+				<input type="text" id="login" name="login" placeholder="username"> <br />
+				<input 	type="password" id="password" name="password" placeholder="passwort"><br />
 				<button type="submit" value="Send login">Senden</button>
 			</form>
 		</div>
