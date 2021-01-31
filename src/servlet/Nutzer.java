@@ -89,7 +89,7 @@ public class Nutzer extends HttpServlet {
 			String email = request.getParameter("email");
 
 			BeanFinanzJsp nutzer = new BeanFinanzJsp();
-			nutzer.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
+			nutzer.setId(!id.isEmpty() ? Long.parseLong(id) : null);
 			nutzer.setLogin(login);
 			nutzer.setPassword(passwort);
 			nutzer.setName(name);
@@ -98,37 +98,50 @@ public class Nutzer extends HttpServlet {
 
 			try {
 				/* hier wird ein Nutzter erstellt */
+				String fehlerMeldung = null;
+				boolean weiterGehen = true;
+
 				if (id == null || id.isEmpty()) {
-					
-					if(login.matches("admin")) {
+					if (login.matches("admin")) {
 						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihren Nutzername.");
-					}else if (!this.isPassValid.isValidPassword(passwort)) {
-						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern."); 
-					}else if(name.isEmpty()) {
+						weiterGehen = false;
+					} else if (!this.isPassValid.isValidPassword(passwort)) {
+						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
+						weiterGehen = false;
+					} else if (name.isEmpty()) {
 						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
-					}else if (this.checkPhone.isPhoneValid(rufnummer)) {
+						weiterGehen = false;
+					} else if (!this.checkPhone.isPhoneValid(rufnummer)) {
 						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
-					}else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
+						weiterGehen = false;
+					} else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
 						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
-					}else {
-						this.daoNutzer.nutzerSpeichernDB(nutzer);	
+						weiterGehen = false;
 					}
+					this.daoNutzer.nutzerSpeichernDB(nutzer);
+
+				} else if (id != null && !id.isEmpty()) {
+					if (login.matches("admin")) {
+						request.setAttribute("fehlerMeldung", "Der Nutzername wird bereits verwendet.");
+						weiterGehen = false;
+					} else if (!this.isPassValid.isValidPassword(passwort)) {
+						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
+						weiterGehen = false;
+					} else if (name.isEmpty()) {
+						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
+						weiterGehen = false;
+					} else if (!this.checkPhone.isPhoneValid(rufnummer)) {
+						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
+						weiterGehen = false;
+					} else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
+						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
+						weiterGehen = false;
+					}
+					this.daoNutzer.update(nutzer);
 				}
 
-				if (id != null && !id.isEmpty()) {
-					if(login.matches("admin")) {
-						request.setAttribute("fehlerMeldung", "Der Nutzername wird bereits verwendet.");
-					}else if (!this.isPassValid.isValidPassword(passwort)) {
-						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
-					}else if(name.isEmpty()) {
-						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
-					}else if (this.checkPhone.isPhoneValid(rufnummer) || rufnummer.isEmpty()) {
-						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
-					}else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
-						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
-					}else {
-					this.daoNutzer.update(nutzer);
-					}
+				if (!weiterGehen) {
+					request.setAttribute("user", nutzer);
 				}
 
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
@@ -139,6 +152,6 @@ public class Nutzer extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-}
+	}
 
 }
