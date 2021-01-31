@@ -18,11 +18,8 @@
 	<center>
 		<h1>Registrierung</h1>
 		<!-- 	Fehlermeldung muss angepasst werden -->
-		<h1 style="color: red"; >${messageNutzerName}</h1>
-		<h1 style="color: red"; >${messagePass}</h1>
-		<h1 style="color: red"; >${messageName}</h1>
-		<h1 style="color: red"; >${messageRufnummer}</h1>
-		<h1 style="color: red"; >${messageEmail}</h1>
+		<h1 style="color: red"; >${fehlerMeldung}</h1>
+		
 	</center>
 
 	<!-- Formular  -->

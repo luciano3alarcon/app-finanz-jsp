@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import beans.BeanFinanzJsp;
 import dao.DaoNutzer;
 import validator.CheckEmail;
-import validator.CheckLogin;
 import validator.CheckPhone;
 import validator.IsPasswordValid;
 
@@ -24,7 +23,6 @@ public class Nutzer extends HttpServlet {
 	IsPasswordValid isPassValid = new IsPasswordValid();
 	CheckEmail ckechEmail = new CheckEmail();
 	CheckPhone checkPhone = new CheckPhone();
-	CheckLogin checkLogin = new CheckLogin();
 
 	public Nutzer() {
 		super();
@@ -99,31 +97,35 @@ public class Nutzer extends HttpServlet {
 			nutzer.setEmail(email);
 
 			try {
-
 				/* hier wird ein Nutzter erstellt */
-				
-				if (id == null || id.isEmpty() && this.daoNutzer.validateLogin(login)) {
-					if (this.checkLogin.isLoginValid(login) ) {
-						request.setAttribute("messageNutzerName", "Überprüfen Sie Ihren Nutzername."); 
+				if (id == null || id.isEmpty()) {
+					
+					if(login.matches("admin")) {
+						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihren Nutzername.");
 					}else if (!this.isPassValid.isValidPassword(passwort)) {
-						request.setAttribute("messagePass", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern."); 
+						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern."); 
+					}else if(name.isEmpty()) {
+						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
+					}else if (this.checkPhone.isPhoneValid(rufnummer)) {
+						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
 					}else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
-						request.setAttribute("messageEmail", "Diese E-Mailadresse ist ungültig.");
-					} else if (this.checkPhone.isPhoneValid(rufnummer)) {
-						request.setAttribute("messageRufnummer", "Überprüfen Sie Ihre Rufnummer");
+						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
 					}else {
 						this.daoNutzer.nutzerSpeichernDB(nutzer);	
 					}
+				}
 
-				} else if (id != null && !id.isEmpty()) {
-					if (!this.daoNutzer.validateLoginUpdate(login, id)) {/* Login = Nutzername */
-						request.setAttribute("message", "Dieser Username wird bereits verwendet.");
+				if (id != null && !id.isEmpty()) {
+					if(login.matches("admin")) {
+						request.setAttribute("fehlerMeldung", "Der Nutzername wird bereits verwendet.");
 					}else if (!this.isPassValid.isValidPassword(passwort)) {
-						request.setAttribute("message", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
-					} else if (this.checkPhone.isPhoneValid(rufnummer)) {
-						request.setAttribute("message", "Überprüfen Sie Ihre Rufnummer");
+						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
+					}else if(name.isEmpty()) {
+						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
+					}else if (this.checkPhone.isPhoneValid(rufnummer) || rufnummer.isEmpty()) {
+						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
 					}else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
-						request.setAttribute("message", "Diese E-Mailadresse ist ungültig.");
+						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
 					}else {
 					this.daoNutzer.update(nutzer);
 					}
@@ -137,6 +139,6 @@ public class Nutzer extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-	}
+}
 
 }

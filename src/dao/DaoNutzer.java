@@ -94,15 +94,19 @@ public class DaoNutzer {
 	public boolean validateLogin(String login) throws Exception {
 
 		String sql = "SELECT COUNT (1) as anzahl from finappuser WHERE login= '" + login + "';";
-
+		boolean isLoginValid = true; 
+		
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet result = statement.executeQuery();
 
 		if (result.next()) {
-			return result.getInt("anzahl") <= 0; /* Hier wird ein True erwartet. */
+			if (result.getInt("anzahl") <= 0) {
+				isLoginValid  = false; /* Hier wird ein True erwartet. */
+			} else {
+				isLoginValid = true;
+			}
 		}
-
-		return false;
+		return isLoginValid;
 	}
 
 	public boolean validateLoginUpdate(String login, String id) throws Exception {
@@ -166,12 +170,12 @@ public class DaoNutzer {
 		}
 	}
 
-	public boolean IsAdmin(String id) throws Exception { /* Darf nur bei Editieren benutzt werden*/
+	public boolean IsAdmin(String id) throws Exception { /* Darf nur bei Editieren benutzt werden */
 
 		/* Query in der DB mit Login und Id, zu überprüfen, ob die ID ein ADmin ist. */
 
 		String sql = "SELECT COUNT (1) as anzahlAdmin from finappuser WHERE id = '" + id + "' AND login= 'admin';";
-		boolean isAdmin = false;
+		boolean isAdmin = true;
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet result = statement.executeQuery();
