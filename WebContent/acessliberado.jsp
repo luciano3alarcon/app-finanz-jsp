@@ -12,12 +12,14 @@
 <body>
 	<br />
 	<center>
-	
 		<h2>Willkomen zum JSP-System!</h2>
 		<a href="speichernNutzer?acao=listartodos"><img
 			title="Registrierung" alt="Klicken Sie hier, sich zu registrieren."
 			src="resources/img/registrierung_icon.jpg" width="70px" height="70px"></a>
-			
+
+		<a href="produktBearbeitung?acao=listarprodukt"><img
+			title="Produkte" alt="Klicken Sie hier die Produkte zu sehen"
+			src="resources/img/products.jpg" width="70px" height="70px"> </a>
 	</center>
 
 </body>

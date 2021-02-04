@@ -9,7 +9,6 @@ import java.util.List;
 
 import beans.BeanFinanzJsp;
 import connection.SingleConnection;
-import validator.IsPasswordValid;
 
 public class DaoNutzer {
 
