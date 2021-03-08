@@ -19,7 +19,7 @@
 		<h1>Registrierung</h1>
 		<!-- 	Fehlermeldung muss angepasst werden -->
 		<h1 style="color: red"; >${fehlerMeldung}</h1>
-		
+
 	</center>
 
 	<!-- Formular  -->
@@ -59,7 +59,8 @@
 					<tr>
 					<tr>
 						<td>E-Mail:</td>
-						<td><input type="text" id="email" name="email" value="${user.email}" ></td>
+						<td><input type="text" id="email" name="email"
+							value="${user.email}"></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -90,9 +91,9 @@
 				<tr>
 					<td style="width: 150px"><c:out value="${user.id}" /></td>
 					<td style="width: 150px"><c:out value="${user.login}" /></td>
-					<td style="width: 150px"><c:out value="${user.name}" /></td>			
-					<td style="width: 150px"><c:out value="${user.rufnummer}"/></td>
-					<td style="width: 150px"><c:out value="${user.email}"/></td>
+					<td style="width: 150px"><c:out value="${user.name}" /></td>
+					<td style="width: 150px"><c:out value="${user.rufnummer}" /></td>
+					<td style="width: 150px"><c:out value="${user.email}" /></td>
 
 					<td><a href="speichernNutzer?acao=editieren&user=${user.id }"><img
 							title="Editieren" src="resources/img/edit_button.png"
