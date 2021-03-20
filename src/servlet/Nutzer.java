@@ -112,7 +112,7 @@ public class Nutzer extends HttpServlet {
 						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
 						weiterGehen = false;
 					} else if (!this.checkPhone.isPhoneValid(rufnummer)) {
-						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
+						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer.");
 						weiterGehen = false;
 					} else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
 						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
