@@ -102,42 +102,56 @@ public class Nutzer extends HttpServlet {
 				boolean weiterGehen = true;
 
 				if (id == null || id.isEmpty()) {
-					if (login.matches("admin")) {
+
+					if (login.isEmpty() || login.matches("admin")) {
 						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihren Nutzername.");
 						weiterGehen = false;
+
 					} else if (!this.isPassValid.isValidPassword(passwort)) {
 						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
 						weiterGehen = false;
-					} else if (name.isEmpty()) {
+
+					} else if (name.isEmpty() || name.matches("") ) {
 						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
 						weiterGehen = false;
+
 					} else if (!this.checkPhone.isPhoneValid(rufnummer)) {
 						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer.");
 						weiterGehen = false;
+
 					} else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
 						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
 						weiterGehen = false;
-					}
-					this.daoNutzer.nutzerSpeichernDB(nutzer);
 
-				} else if (id != null && !id.isEmpty()) {
+					} else {
+						this.daoNutzer.nutzerSpeichernDB(nutzer);
+					}
+				}
+
+				else if (id != null && !id.isEmpty()) {
 					if (login.matches("admin")) {
 						request.setAttribute("fehlerMeldung", "Der Nutzername wird bereits verwendet.");
 						weiterGehen = false;
+
 					} else if (!this.isPassValid.isValidPassword(passwort)) {
 						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
 						weiterGehen = false;
+
 					} else if (name.isEmpty()) {
 						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
 						weiterGehen = false;
+
 					} else if (!this.checkPhone.isPhoneValid(rufnummer)) {
 						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
 						weiterGehen = false;
+
 					} else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
 						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
 						weiterGehen = false;
+
+					} else {
+						this.daoNutzer.update(nutzer);
 					}
-					this.daoNutzer.update(nutzer);
 				}
 
 				if (!weiterGehen) {

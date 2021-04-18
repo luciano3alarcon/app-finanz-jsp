@@ -24,6 +24,7 @@
 
 	<!-- Formular  -->
 	<form action="speichernNutzer" method="post" id="formUser">
+<!-- 		onsubmit=" return eingabeValidierung() ? true : false"> -->
 		<!-- 	 Hier werde ich eine Tabelle erstellen -->
 		<ul class="form-style-1">
 			<li>
@@ -105,6 +106,31 @@
 			</c:forEach>
 		</table>
 	</div>
+
+	<!-- JavaScript Feldern -->
+	<script type="text/javascript">
+	function eingabeValidierung(){
+		
+		if(document.getElementById("login").value == ''){ // Validierung Username  
+			alert('Geben Sie Ihren Username ein.');
+			return false;
+		} else if(document.getElementById("password").value  == ''){ //Validierung Passwort:
+			alert('Geben Sie Ihr Passwort ein.');
+			return false;
+		} else if(document.getElementById("name").value  == ''){    //Validierung Name:
+			alert('Geben Sie Ihren Namen ein.');
+			return false;
+		} else if(document.getElementById("rufnummer").value  == ''){ //Validierung Rufnummer:
+			alert('Geben Sie Ihre Rufnummer ein.');
+			return false;
+		} else if(document.getElementById("email").value  == ''){ //Validierung E-Mail:
+			alert('Geben Sie Ihre E-Mail ein.');
+			return false;
+		}
+		return true; //Wenn alle Eingabe korrekt sind, landet die Code hier. 
+	}
+
+</script>
 
 </body>
 </html>

@@ -7,12 +7,11 @@ public class CheckPhone {
 
 	public boolean isPhoneValid(String rufnummer) {
 	
-		boolean isValid = true;
-		if(rufnummer.matches("^(?=(?:[8-9]){1})(?=[0-9]{8}).*")){
-			if(rufnummer.length() > 5 || !rufnummer.isEmpty()) {
+		boolean isValid = false;
+		if (!rufnummer.isEmpty() && rufnummer.length() > 5) {
+			//if(rufnummer.matches("^(?=(?:[8-9]){1})(?=[0-9]{8}).*")) {
 				isValid = true; 
 			}
-		}
 		return isValid; 
 	}
 }

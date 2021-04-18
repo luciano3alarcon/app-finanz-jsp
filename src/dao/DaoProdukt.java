@@ -22,7 +22,6 @@ public class DaoProdukt {
 	public void produtktSpeichern(BeanProdukt produkt) {
 
 		try {
-
 			String sql = "INSERT INTO finappprodukt(beschreibung, anzahl, preis) VALUES (?, ?, ?);";
 			
 			PreparedStatement insert = connection.prepareStatement(sql);
