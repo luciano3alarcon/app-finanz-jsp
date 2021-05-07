@@ -14,6 +14,9 @@
 
 </head>
 <body>
+	<a href="acessliberado.jsp">Home</a>
+	<a href="produktregister.jsp">Produkt eintragen</a>
+	
 	<br>
 	<center>
 		<h1>Registrierung</h1>
@@ -23,8 +26,11 @@
 	</center>
 
 	<!-- Formular  -->
-	<form action="speichernNutzer" method="post" id="formUser">
-<!-- 		onsubmit=" return eingabeValidierung() ? true : false"> -->
+	<!-- 	Javascript Validierung -->
+
+	<form action="speichernNutzer" method="post" id="formUser"
+		onsubmit=" return eingabeValidierung() ? true : false">
+
 		<!-- 	 Hier werde ich eine Tabelle erstellen -->
 		<ul class="form-style-1">
 			<li>

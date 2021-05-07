@@ -8,7 +8,8 @@
 </head>
 <body>
 
-	<h2>Acess denied: Sie können nicht weiter! </h2>
-
+	<h2>Acess denied: Bitte gehen Sie nach Home zurück.  </h2>
+	<a href="index.jsp">Zurück zum Login</a>
+	
 </body>
 </html>

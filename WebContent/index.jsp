@@ -29,12 +29,5 @@
 		</div>
 	</div>
 
-<!-- 	<form action="LoginServlet" method="post" class="register-form"> -->
-<!-- 		Login: <input type="text" id="login" name="login" -->
-<!-- 			placeholder="username"> <br /> Pass: <input type="password" -->
-<!-- 			id="password" name="password"><br /> -->
-<!-- 		<button type="submit" value="Send login">Senden</button> -->
-<!-- 	</form> -->
-
 </body>
 </html>

@@ -16,15 +16,20 @@
 
 </head>
 <body>
+	<a href="acessliberado.jsp"> Home </a>
+	<a href="nutzerregistrierung.jsp"> Nutzer registrieren </a>
+
 	<br>
 	<center>
 		<h1>Produkt Register</h1>
+
 		<!-- 	Fehlermeldung muss angepasst werden -->
 		<h1 style="color: red"; >${fehlerMeldungProdukt}</h1>
 	</center>
 
 	<!-- Formular  -->
-	<form action="produktBearbeitung" method="post" id="formProdukt">
+	<form action="produktBearbeitung" method="post" id="formProdukt"
+		onsubmit="return eingabeValidierung() ? true : false">
 
 		<!-- 	 Hier werde ich eine Tabelle erstellen -->
 		<ul class="form-style-1">
@@ -34,7 +39,7 @@
 					<tr>
 						<td>ProduktId:</td>
 						<td><input type="text" readonly="readonly" id="id" name="id"
-							value="${produktListe.id}"></td> 
+							value="${produktListe.id}"></td>
 					</tr>
 					<tr>
 						<!-- zweite Spalte Produktname-->
@@ -55,8 +60,8 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Speichern" />
-						<input type="submit" value="Abbrechen"
+						<td><input type="submit" value="Speichern" /> <input
+							type="submit" value="Abbrechen"
 							onclick="document.getElementById('formProdukt').action='produktBearbeitung?aktion=reset" /></td>
 					</tr>
 				</table>
@@ -97,6 +102,27 @@
 			</c:forEach>
 		</table>
 	</div>
+
+	<script type="text/javascript">
+	function eingabeValidierung(){
+		
+		if(document.getElementById("beschreibung").value == '') {
+			alert('Geben Sie den Produktnamen ein.');
+			return false; 
+		
+		}else if(document.getElementById('preis').value == ''){
+			alert('Geben Sie den Preis ein.');
+			return false; 
+			
+		}else if(document.getElementById('anzahl').value == ''){
+			alert('Geben Sie die Produktmenge ein.');
+			return false; 
+		}
+		return true; 
+	}
+
+</script>
+
 
 </body>
 </html>
