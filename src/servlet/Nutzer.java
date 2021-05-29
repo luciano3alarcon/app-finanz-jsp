@@ -88,7 +88,7 @@ public class Nutzer extends HttpServlet {
 			String rufnummer = request.getParameter("rufnummer");
 			String email = request.getParameter("email");
 			
-			String plz = request.getParameter("postleitzahl"); //plz
+			String plz = request.getParameter("plz"); 
 			String strasse = request.getParameter("strasse");
 			String stadt = request.getParameter("stadt");
 			String bundesland = request.getParameter("bundesland");
@@ -117,7 +117,7 @@ public class Nutzer extends HttpServlet {
 						weiterGehen = false;
 
 					} else if (!this.isPassValid.isValidPassword(passwort)) {
-						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
+						request.setAttribute("fehlerMeldung", "Benutzen Sie in Ihrem Password Gross- und Kleinbuchstab, sowie Ziffern.");
 						weiterGehen = false;
 
 					} else if (name.isEmpty() || name.matches("") ) {
@@ -139,7 +139,7 @@ public class Nutzer extends HttpServlet {
 
 				else if (id != null && !id.isEmpty()) {
 					if (login.matches("admin")) {
-						request.setAttribute("fehlerMeldung", "Der Nutzername wird bereits verwendet.");
+						request.setAttribute("fehlerMeldung", "Sie haben keine Berechtigung, den 'Admin' zu ändern.");
 						weiterGehen = false;
 
 					} else if (!this.isPassValid.isValidPassword(passwort)) {

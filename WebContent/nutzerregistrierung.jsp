@@ -82,7 +82,7 @@
 					<!-- extern jquery: Beispiel: CEP aus Brasilien-->
 					<tr>
 						<td>Postleitzahl</td>
-						<td><input type="text" id="cep" name="cep"
+						<td><input type="text" id="plz" name="plz"
 							onblur="plzAbfrage();"></td>
 					</tr>
 					<tr>
@@ -136,7 +136,7 @@
 					<td style="width: 150px"><c:out value="${user.rufnummer}" /></td>
 					<td style="width: 150px"><c:out value="${user.email}" /></td>
 					<td style="width: 150px"><c:out value="${user.plz}" /></td>
-					<td style="width: 150px"><c:out value="${user.strasse}" /></td>
+					<td style="width: 650px"><c:out value="${user.strasse}" /></td>
 					<td style="width: 150px"><c:out value="${user.stadt}" /></td>
 					<td style="width: 150px"><c:out value="${user.bundesland}" /></td>
 					

@@ -22,7 +22,7 @@ public class DaoNutzer {
 	public void nutzerSpeichernDB(BeanFinanzJsp nutzer) { // Das Objekt Bean hat Login und Passwort
 
 		try {
-			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email, postleitzahl, strasse, stadt, bundesland) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, nutzer.getLogin());
@@ -33,8 +33,8 @@ public class DaoNutzer {
 
 			insert.setString(6, nutzer.getPlz());
 			insert.setString(7, nutzer.getStrasse());
-			insert.setString(9, nutzer.getStadt());
-			insert.setString(10, nutzer.getBundesland());
+			insert.setString(8, nutzer.getStadt());
+			insert.setString(9, nutzer.getBundesland());
 			insert.execute();
 
 			connection.commit();
@@ -149,7 +149,7 @@ public class DaoNutzer {
 			beanObj.setRufnummer(result.getString("rufnummer"));
 			beanObj.setEmail(result.getString("email"));
 
-			beanObj.setPlz(result.getString("plz"));
+			beanObj.setPlz(result.getString("postleitzahl"));
 			beanObj.setStrasse(result.getString("strasse"));
 			beanObj.setStadt(result.getString("stadt"));
 			beanObj.setBundesland(result.getString("bundesland"));
@@ -161,7 +161,7 @@ public class DaoNutzer {
 
 	public void update(BeanFinanzJsp nutzer) {
 
-		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=?, rufnummer= ?, email= ? WHERE  id= "
+		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=?, rufnummer= ?, email= ?, postleitzahl= ?, strasse= ?, stadt= ?, bundesland= ? WHERE  id= "
 				+ nutzer.getId() + " ; ";
 		try {
 			PreparedStatement statement = connection.prepareStatement(abfrage);
@@ -174,8 +174,8 @@ public class DaoNutzer {
 
 			statement.setString(7, nutzer.getPlz());
 			statement.setString(8, nutzer.getStrasse());
-			statement.setString(10, nutzer.getStadt());
-			statement.setString(11, nutzer.getBundesland());
+			statement.setString(9, nutzer.getStadt());
+			statement.setString(10, nutzer.getBundesland());
 			statement.executeUpdate();
 			connection.commit();
 
