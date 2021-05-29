@@ -22,7 +22,7 @@ public class DaoNutzer {
 	public void nutzerSpeichernDB(BeanFinanzJsp nutzer) { // Das Objekt Bean hat Login und Passwort
 
 		try {
-			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email) VALUES (?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, nutzer.getLogin());
@@ -30,6 +30,12 @@ public class DaoNutzer {
 			insert.setString(3, nutzer.getName());
 			insert.setString(4, nutzer.getRufnummer());
 			insert.setString(5, nutzer.getEmail());
+
+			insert.setString(6, nutzer.getPlz());
+			insert.setString(7, nutzer.getStrasse());
+			insert.setString(8, nutzer.getStadtTeil());
+			insert.setString(9, nutzer.getStadt());
+			insert.setString(10, nutzer.getBundesland());
 			insert.execute();
 
 			connection.commit();
@@ -61,6 +67,12 @@ public class DaoNutzer {
 			beanFinanzNutzer.setName(resultSet.getString("name"));
 			beanFinanzNutzer.setRufnummer(resultSet.getString("rufnummer"));
 			beanFinanzNutzer.setEmail(resultSet.getString("email"));
+
+			beanFinanzNutzer.setPlz("plz");
+			beanFinanzNutzer.setStrasse(resultSet.getString("strasse"));
+			beanFinanzNutzer.setStadtTeil(resultSet.getString("stadtTeil"));
+			beanFinanzNutzer.setStadt(resultSet.getString("stadt"));
+			beanFinanzNutzer.setBundesland(resultSet.getString("bundesland"));
 			liste.add(beanFinanzNutzer);
 		}
 
@@ -93,14 +105,14 @@ public class DaoNutzer {
 	public boolean validateLogin(String login) throws Exception {
 
 		String sql = "SELECT COUNT (1) as anzahl from finappuser WHERE login= '" + login + "';";
-		boolean isLoginValid = true; 
-		
+		boolean isLoginValid = true;
+
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet result = statement.executeQuery();
 
 		if (result.next()) {
 			if (result.getInt("anzahl") <= 0) {
-				isLoginValid  = false; /* Hier wird ein True erwartet. */
+				isLoginValid = false; /* Hier wird ein True erwartet. */
 			} else {
 				isLoginValid = true;
 			}
@@ -139,6 +151,12 @@ public class DaoNutzer {
 			beanObj.setRufnummer(result.getString("rufnummer"));
 			beanObj.setEmail(result.getString("email"));
 
+			beanObj.setPlz(result.getString("plz"));
+			beanObj.setStrasse(result.getString("strasse"));
+			beanObj.setStadtTeil(result.getString("stadtTeil"));
+			beanObj.setStadt(result.getString("stadt"));
+			beanObj.setBundesland(result.getString("bundesland"));
+
 			return beanObj;
 		}
 		return null;
@@ -156,6 +174,12 @@ public class DaoNutzer {
 			statement.setString(4, nutzer.getName());
 			statement.setString(5, nutzer.getRufnummer());
 			statement.setString(6, nutzer.getEmail());
+
+			statement.setString(7, nutzer.getPlz());
+			statement.setString(8, nutzer.getStrasse());
+			statement.setString(9, nutzer.getStadtTeil());
+			statement.setString(10, nutzer.getStadt());
+			statement.setString(11, nutzer.getBundesland());
 			statement.executeUpdate();
 			connection.commit();
 

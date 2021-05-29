@@ -87,6 +87,12 @@ public class Nutzer extends HttpServlet {
 			String name = request.getParameter("name");
 			String rufnummer = request.getParameter("rufnummer");
 			String email = request.getParameter("email");
+			
+			String plz = request.getParameter("plz");
+			String strasse = request.getParameter("strasse");
+			String stadtTeil = request.getParameter("stadtTeil");
+			String stadt = request.getParameter("stadt");
+			String bundesland = request.getParameter("bundesland");
 
 			BeanFinanzJsp nutzer = new BeanFinanzJsp();
 			nutzer.setId(!id.isEmpty() ? Long.parseLong(id) : null);
@@ -95,6 +101,11 @@ public class Nutzer extends HttpServlet {
 			nutzer.setName(name);
 			nutzer.setRufnummer(rufnummer);
 			nutzer.setEmail(email);
+			nutzer.setPlz(plz);
+			nutzer.setStrasse(strasse);
+			nutzer.setStadtTeil(stadtTeil);
+			nutzer.setStadt(stadt);
+			nutzer.setBundesland(bundesland);
 
 			try {
 				/* hier wird ein Nutzter erstellt */

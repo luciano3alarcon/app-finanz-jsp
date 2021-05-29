@@ -8,6 +8,54 @@ public class BeanFinanzJsp {
 	private String name;
 	private String rufnummer;
 	private String email;
+	
+//	Date für Adresse
+	private String plz;
+	private String strasse;
+	private String stadtTeil; 
+	private String stadt; 
+	private String bundesland;
+		
+	
+	public String getPlz() {
+		return plz;
+	}
+
+	public void setPlz(String plz) {
+		this.plz = plz;
+	}
+
+	public String getStrasse() {
+		return strasse;
+	}
+
+	public void setStrasse(String strasse) {
+		this.strasse = strasse;
+	}
+
+	public String getStadtTeil() {
+		return stadtTeil;
+	}
+
+	public void setStadtTeil(String stadtTeil) {
+		this.stadtTeil = stadtTeil;
+	}
+
+	public String getStadt() {
+		return stadt;
+	}
+
+	public void setStadt(String stadt) {
+		this.stadt = stadt;
+	}
+
+	public String getBundesland() {
+		return bundesland;
+	}
+
+	public void setBundesland(String bundesland) {
+		this.bundesland = bundesland;
+	}
 
 	public void setName(String name) {
 		this.name = name;

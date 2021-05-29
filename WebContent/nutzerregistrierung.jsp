@@ -12,11 +12,20 @@
 <link rel="stylesheet" href="resources/css/cadastro.css">
 <link rel="stylesheet" href="resources/css/darstellungtable.css">
 
+<!-- Adicionando JQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+
 </head>
 <body>
+
+	<!-- Navegationsmenü  -->
 	<a href="acessliberado.jsp">Home</a>
 	<a href="produktregister.jsp">Produkt eintragen</a>
-	
+	<a href="index.jsp" onclick="alert('Sie werden abgemeldet.')">Abmelden
+	</a>
+
 	<br>
 	<center>
 		<h1>Registrierung</h1>
@@ -25,12 +34,12 @@
 
 	</center>
 
-	<!-- Formular  -->
 	<!-- 	Javascript Validierung -->
 
 	<form action="speichernNutzer" method="post" id="formUser"
 		onsubmit=" return eingabeValidierung() ? true : false">
 
+		<!-- Formular  -->
 		<!-- 	 Hier werde ich eine Tabelle erstellen -->
 		<ul class="form-style-1">
 			<li>
@@ -69,6 +78,31 @@
 						<td><input type="text" id="email" name="email"
 							value="${user.email}"></td>
 					</tr>
+
+					<!-- extern jquery: Beispiel: CEP aus Brasilien-->
+					<tr>
+						<td>Postleitzahl</td>
+						<td><input type="text" id="cep" name="cep"
+							onblur="plzAbfrage();"></td>
+					</tr>
+					<tr>
+						<td>Strasse</td>
+						<td><input type="text" id="strasse" name="strasse"></td>
+					</tr>
+					<tr>
+						<td>Stadtteil</td>
+						<td><input type="text" id="stadtteil" name="stadtteil"></td>
+					</tr>
+					<tr>
+						<td>Stadt</td>
+						<td><input type="text" id="stadt" name="stadt"></td>
+					</tr>
+					<tr>
+						<td>Land</td>
+						<td><input type="text" id="bundesland" name="bundesland"></td>
+					</tr>
+					<!-- Ende der Jquey CEP-Brasilien-->
+
 					<tr>
 						<td></td>
 						<td><input type="submit" value="Speichern" /> <input
@@ -91,6 +125,7 @@
 				<th>Name</th>
 				<th>Rufnummer</th>
 				<th>E-Mail</th>
+				<th>PLZ</th>
 				<th>Editieren</th>
 				<th>Löschen</th>
 			</tr>
@@ -135,6 +170,32 @@
 		}
 		return true; //Wenn alle Eingabe korrekt sind, landet die Code hier. 
 	}
+	
+	function plzAbfrage(){
+		
+		var cep = $("#cep").val(); 
+        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+            if (!("erro" in dados)) {
+          		 $("cep").val(dados.cep);
+            	$("#strasse").val(dados.logradouro);
+                $("#stadtteil").val(dados.bairro);
+                $("#stadt").val(dados.localidade); 
+                $("#bundesland").val(dados.uf); 
+
+            } 
+            else {
+            	alert("CEP não encontrado.");
+            	$("#cep").val('');
+            	$("#strasse").val('');
+                $("#stadtteil").val('');
+                $("#stadt").val(''); 
+                $("#bundesland").val(''); 
+                
+            }
+        });		
+	}
+	
 
 </script>
 

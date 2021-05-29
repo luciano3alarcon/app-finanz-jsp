@@ -12,14 +12,27 @@
 <body>
 	<br />
 	<center>
-		<h2>Willkomen zum JSP-System!</h2>
-		<a href="speichernNutzer?acao=listartodos"><img
-			title="Registrierung" alt="Klicken Sie hier, sich zu registrieren."
-			src="resources/img/registrierung_icon.jpg" width="70px" height="70px"></a>
+		<h2>Willkomen zum Schulungssystem</h2>
 
-		<a href="produktBearbeitung?aktion=aufgelisteteprodukte"><img
-			title="Produkte" alt="Klicken Sie hier die Produkte zu sehen"
-			src="resources/img/products.jpg" width="70px" height="70px"> </a>
+		<br>
+		<table>
+			<tr>
+				<td align="center"><a href="speichernNutzer?acao=listartodos"><img
+						title="Registrierung"
+						alt="Klicken Sie hier, sich zu registrieren."
+						src="resources/img/registrierung_icon.jpg" width="70px"
+						height="70px"></a></td>
+				<td align="center"><a
+					href="produktBearbeitung?aktion=aufgelisteteprodukte"><img
+						title="Produkte" alt="Klicken Sie hier die Produkte zu sehen"
+						src="resources/img/products.jpg" width="70px" height="70px">
+				</a></td>
+			</tr>
+			<tr>
+				<td>Nutzer registrieren</td>
+				<td>Produkt registrieren</td>
+			</tr>
+		</table>
 	</center>
 
 </body>
