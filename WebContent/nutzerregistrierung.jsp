@@ -90,10 +90,6 @@
 						<td><input type="text" id="strasse" name="strasse"></td>
 					</tr>
 					<tr>
-						<td>Stadtteil</td>
-						<td><input type="text" id="stadtteil" name="stadtteil"></td>
-					</tr>
-					<tr>
 						<td>Stadt</td>
 						<td><input type="text" id="stadt" name="stadt"></td>
 					</tr>
@@ -126,6 +122,9 @@
 				<th>Rufnummer</th>
 				<th>E-Mail</th>
 				<th>PLZ</th>
+				<th>Strasse</th>
+				<th>Stadt</th>
+				<th>Bundesland</th>
 				<th>Editieren</th>
 				<th>Löschen</th>
 			</tr>
@@ -136,7 +135,11 @@
 					<td style="width: 150px"><c:out value="${user.name}" /></td>
 					<td style="width: 150px"><c:out value="${user.rufnummer}" /></td>
 					<td style="width: 150px"><c:out value="${user.email}" /></td>
-
+					<td style="width: 150px"><c:out value="${user.plz}" /></td>
+					<td style="width: 150px"><c:out value="${user.strasse}" /></td>
+					<td style="width: 150px"><c:out value="${user.stadt}" /></td>
+					<td style="width: 150px"><c:out value="${user.bundesland}" /></td>
+					
 					<td><a href="speichernNutzer?acao=editieren&user=${user.id }"><img
 							title="Editieren" src="resources/img/edit_button.png"
 							width="20px" height="20px"> </a></td>
@@ -179,7 +182,6 @@
             if (!("erro" in dados)) {
           		 $("cep").val(dados.cep);
             	$("#strasse").val(dados.logradouro);
-                $("#stadtteil").val(dados.bairro);
                 $("#stadt").val(dados.localidade); 
                 $("#bundesland").val(dados.uf); 
 
@@ -188,10 +190,8 @@
             	alert("CEP não encontrado.");
             	$("#cep").val('');
             	$("#strasse").val('');
-                $("#stadtteil").val('');
                 $("#stadt").val(''); 
                 $("#bundesland").val(''); 
-                
             }
         });		
 	}

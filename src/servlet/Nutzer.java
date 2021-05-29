@@ -88,9 +88,8 @@ public class Nutzer extends HttpServlet {
 			String rufnummer = request.getParameter("rufnummer");
 			String email = request.getParameter("email");
 			
-			String plz = request.getParameter("plz");
+			String plz = request.getParameter("postleitzahl"); //plz
 			String strasse = request.getParameter("strasse");
-			String stadtTeil = request.getParameter("stadtTeil");
 			String stadt = request.getParameter("stadt");
 			String bundesland = request.getParameter("bundesland");
 
@@ -103,7 +102,6 @@ public class Nutzer extends HttpServlet {
 			nutzer.setEmail(email);
 			nutzer.setPlz(plz);
 			nutzer.setStrasse(strasse);
-			nutzer.setStadtTeil(stadtTeil);
 			nutzer.setStadt(stadt);
 			nutzer.setBundesland(bundesland);
 

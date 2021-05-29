@@ -22,7 +22,7 @@ public class DaoNutzer {
 	public void nutzerSpeichernDB(BeanFinanzJsp nutzer) { // Das Objekt Bean hat Login und Passwort
 
 		try {
-			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, nutzer.getLogin());
@@ -33,7 +33,6 @@ public class DaoNutzer {
 
 			insert.setString(6, nutzer.getPlz());
 			insert.setString(7, nutzer.getStrasse());
-			insert.setString(8, nutzer.getStadtTeil());
 			insert.setString(9, nutzer.getStadt());
 			insert.setString(10, nutzer.getBundesland());
 			insert.execute();
@@ -68,9 +67,8 @@ public class DaoNutzer {
 			beanFinanzNutzer.setRufnummer(resultSet.getString("rufnummer"));
 			beanFinanzNutzer.setEmail(resultSet.getString("email"));
 
-			beanFinanzNutzer.setPlz("plz");
+			beanFinanzNutzer.setPlz(resultSet.getString("postleitzahl"));
 			beanFinanzNutzer.setStrasse(resultSet.getString("strasse"));
-			beanFinanzNutzer.setStadtTeil(resultSet.getString("stadtTeil"));
 			beanFinanzNutzer.setStadt(resultSet.getString("stadt"));
 			beanFinanzNutzer.setBundesland(resultSet.getString("bundesland"));
 			liste.add(beanFinanzNutzer);
@@ -153,7 +151,6 @@ public class DaoNutzer {
 
 			beanObj.setPlz(result.getString("plz"));
 			beanObj.setStrasse(result.getString("strasse"));
-			beanObj.setStadtTeil(result.getString("stadtTeil"));
 			beanObj.setStadt(result.getString("stadt"));
 			beanObj.setBundesland(result.getString("bundesland"));
 
@@ -177,7 +174,6 @@ public class DaoNutzer {
 
 			statement.setString(7, nutzer.getPlz());
 			statement.setString(8, nutzer.getStrasse());
-			statement.setString(9, nutzer.getStadtTeil());
 			statement.setString(10, nutzer.getStadt());
 			statement.setString(11, nutzer.getBundesland());
 			statement.executeUpdate();

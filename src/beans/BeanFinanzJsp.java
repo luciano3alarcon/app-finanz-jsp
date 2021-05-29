@@ -12,13 +12,12 @@ public class BeanFinanzJsp {
 //	Date für Adresse
 	private String plz;
 	private String strasse;
-	private String stadtTeil; 
 	private String stadt; 
 	private String bundesland;
 		
 	
 	public String getPlz() {
-		return plz;
+		return this.plz;
 	}
 
 	public void setPlz(String plz) {
@@ -26,23 +25,15 @@ public class BeanFinanzJsp {
 	}
 
 	public String getStrasse() {
-		return strasse;
+		return this.strasse;
 	}
 
 	public void setStrasse(String strasse) {
 		this.strasse = strasse;
 	}
 
-	public String getStadtTeil() {
-		return stadtTeil;
-	}
-
-	public void setStadtTeil(String stadtTeil) {
-		this.stadtTeil = stadtTeil;
-	}
-
 	public String getStadt() {
-		return stadt;
+		return this.stadt;
 	}
 
 	public void setStadt(String stadt) {
@@ -50,7 +41,7 @@ public class BeanFinanzJsp {
 	}
 
 	public String getBundesland() {
-		return bundesland;
+		return this.bundesland;
 	}
 
 	public void setBundesland(String bundesland) {
