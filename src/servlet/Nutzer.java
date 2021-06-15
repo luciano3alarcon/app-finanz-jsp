@@ -1,13 +1,23 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Base64;
+
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import beans.BeanFinanzJsp;
 import dao.DaoNutzer;
@@ -94,7 +104,7 @@ public class Nutzer extends HttpServlet {
 			String bundesland = request.getParameter("bundesland");
 
 			BeanFinanzJsp nutzer = new BeanFinanzJsp();
-			nutzer.setId(!id.isEmpty() ? Long.parseLong(id) : null);
+			nutzer.setId( id != null &&  !id.isEmpty() ? Long.parseLong(id) : null);
 			nutzer.setLogin(login);
 			nutzer.setPassword(passwort);
 			nutzer.setName(name);
@@ -106,13 +116,30 @@ public class Nutzer extends HttpServlet {
 			nutzer.setBundesland(bundesland);
 
 			try {
+				
+				
+				if(ServletFileUpload.isMultipartContent(request) ) {
+					
+					List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);   
+					
+					for (FileItem fileItem : fileItems) {
+						
+						if(fileItem.getFieldName().equals("bild")) {
+							String bild = Base64.getEncoder().encodeToString(fileItem.get()); 													
+							System.out.println(bild);
+						}
+												
+					}
+					
+				}
+				
 				/* hier wird ein Nutzter erstellt */
 				String fehlerMeldung = null;
 				boolean weiterGehen = true;
 
 				if (id == null || id.isEmpty()) {
 
-					if (login.isEmpty() || login.matches("admin")) {
+					if (login.matches("admin") || login.matches("")) {
 						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihren Nutzername.");
 						weiterGehen = false;
 
@@ -133,6 +160,7 @@ public class Nutzer extends HttpServlet {
 						weiterGehen = false;
 
 					} else {
+						request.setAttribute("fehlerMeldung", "Der Nutzer wurde erfolgreich registriert");
 						this.daoNutzer.nutzerSpeichernDB(nutzer);
 					}
 				}
@@ -159,6 +187,7 @@ public class Nutzer extends HttpServlet {
 						weiterGehen = false;
 
 					} else {
+						request.setAttribute("fehlerMeldung", "Die Information wurde aktualisiert.");
 						this.daoNutzer.update(nutzer);
 					}
 				}
