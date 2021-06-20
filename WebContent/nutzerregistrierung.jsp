@@ -22,7 +22,8 @@
 
 	<!-- Navegationsmenü  -->
 	<a href="acessliberado.jsp">Home</a>
-	<a href="produktregister.jsp">Produkt eintragen</a>
+	<a href="produktBearbeitung?aktion=aufgelisteteprodukte">Produkt
+		eintragen</a>
 	<a href="index.jsp" onclick="alert('Sie werden abgemeldet.')">Abmelden
 	</a>
 
@@ -35,16 +36,17 @@
 	</center>
 
 	<!-- 	Javascript Validierung -->
-		<!-- 	Wenn das Formular eine Updload-Datei bekommt, braucht es  enctype="multipart/form-data.  Das gilt nicht für Ajax-->
+	<!-- 	Wenn das Formular eine Updload-Datei bekommt, braucht es  enctype="multipart/form-data.  Das gilt nicht für Ajax-->
 	<form action="speichernNutzer" method="post" id="formUser"
-		onsubmit=" return eingabeValidierung() ? true : false" enctype="multipart/form-data">
+		onsubmit=" return eingabeValidierung() ? true : false"
+		enctype="multipart/form-data">
 
-		<!-- Formular  -->
+		<!-- Eingabe Formular  -->
 		<!-- 	 Hier werde ich eine Tabelle erstellen -->
 		<ul class="form-style-1">
 			<li>
 				<table>
-					<!-- erste Spalte Nutzerid-->
+					<!-- erste Linie -->
 					<tr>
 						<td><input type="text" readonly="readonly" id="id" name="id"
 							value="${user.id}" placeholder="schreiben geschützt"></td>
@@ -52,14 +54,17 @@
 						<td><input type="text" id="login" name="login"
 							value="${user.login}" placeholder="Username"></td>
 					</tr>
-					<tr>
 
+					<!-- zweite Linie -->
+					<tr>
 						<td><input type="text" id="email" name="email"
 							value="${user.email}" placeholder="E-Mailadresse"></td>
 
 						<td><input type="password" id="password" name="password"
 							value="${user.password}" placeholder="Password" /></td>
 					</tr>
+
+					<!-- dritte Linie -->
 					<tr>
 						<td><input type="text" id="name" name="name"
 							value="${user.name}" placeholder="Vor- und Nachname"></td>
@@ -67,6 +72,8 @@
 						<td><input type="text" id="strasse" name="strasse"
 							value="${user.strasse}" placeholder="Adresse und Hausnummer"></td>
 					</tr>
+
+					<!-- vierte Linie -->
 					<tr>
 						<td><input type="text" id="plz" name="plz"
 							onblur="plzAbfrage();" value="${user.plz}"
@@ -75,6 +82,8 @@
 						<td><input type="text" id="stadt" name="stadt"
 							value="${user.stadt}" placeholder="Stadt"></td>
 					</tr>
+
+					<!-- fünfte Linie -->
 					<tr>
 						<td><input type="text" id="bundesland" name="bundesland"
 							value="${user.bundesland}" placeholder="Bundesland"></td>
@@ -83,18 +92,18 @@
 							value="${user.rufnummer}" placeholder="Telefonummer"></td>
 					<tr>
 					
+					<!-- Upload von Dateien -->
 					<tr>
-					<td>Bild: </td>
-					<td><input type="file" id="bild" name="bild" value="Bild"/></td>
+						<td>Bild:</td>
+						<td><input type="file" id="bild" name="bild" value="Bild"   /></td>
 					</tr>
-					
 					<tr>
 						<td>Dokument:</td>
-						<td><input type="file" ></td>
+						<td><input type="file"></td>
 					</tr>
 
 					<tr>
-						<td align="right"><input type="submit" value="Speichern" />
+						<td><input type="submit" value="Speichern" />
 						<td><input type="submit" value="Abbrechen"
 							onclick="document.getElementById('formUser').action='speichernNutzer?acao=reset'" />
 					</tr>
@@ -104,7 +113,6 @@
 	</form>
 
 	<!-- Tabelle -->
-
 	<div id="wrapper">
 		<table id="keywords" cellspacing="0" cellpadding="0">
 			<h1>Registrierte Nutzer</h1>

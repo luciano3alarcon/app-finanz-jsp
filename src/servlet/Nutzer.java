@@ -7,13 +7,13 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.Base64;
-
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -26,6 +26,7 @@ import validator.CheckPhone;
 import validator.IsPasswordValid;
 
 @WebServlet("/speichernNutzer")
+@MultipartConfig
 public class Nutzer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -90,21 +91,24 @@ public class Nutzer extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else {
-
 			String id = request.getParameter("id");
 			String login = request.getParameter("login");
 			String passwort = request.getParameter("password");
 			String name = request.getParameter("name");
 			String rufnummer = request.getParameter("rufnummer");
 			String email = request.getParameter("email");
-			
-			String plz = request.getParameter("plz"); 
+			String plz = request.getParameter("plz");
 			String strasse = request.getParameter("strasse");
 			String stadt = request.getParameter("stadt");
 			String bundesland = request.getParameter("bundesland");
 
 			BeanFinanzJsp nutzer = new BeanFinanzJsp();
-			nutzer.setId( id != null &&  !id.isEmpty() ? Long.parseLong(id) : null);
+			//nutzer.setId(id != null || !id.isEmpty() ? Long.parseLong(id) : null);  Code funktioniert nicht.
+			if (id == null || id.isEmpty()) {
+				nutzer.setId(null);
+			} else {
+				nutzer.setId(Long.parseLong(id));
+			}
 			nutzer.setLogin(login);
 			nutzer.setPassword(passwort);
 			nutzer.setName(name);
@@ -116,23 +120,20 @@ public class Nutzer extends HttpServlet {
 			nutzer.setBundesland(bundesland);
 
 			try {
-				
-				
-				if(ServletFileUpload.isMultipartContent(request) ) {
-					
-					List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);   
-					
+
+				if (ServletFileUpload.isMultipartContent(request)) {
+
+					List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+
 					for (FileItem fileItem : fileItems) {
-						
-						if(fileItem.getFieldName().equals("bild")) {
-							String bild = Base64.getEncoder().encodeToString(fileItem.get()); 													
+
+						if (fileItem.getFieldName().equals("bild")) {
+							String bild = Base64.getEncoder().encodeToString(fileItem.get());
 							System.out.println(bild);
 						}
-												
 					}
-					
 				}
-				
+
 				/* hier wird ein Nutzter erstellt */
 				String fehlerMeldung = null;
 				boolean weiterGehen = true;
@@ -144,10 +145,11 @@ public class Nutzer extends HttpServlet {
 						weiterGehen = false;
 
 					} else if (!this.isPassValid.isValidPassword(passwort)) {
-						request.setAttribute("fehlerMeldung", "Benutzen Sie in Ihrem Password Gross- und Kleinbuchstab, sowie Ziffern.");
+						request.setAttribute("fehlerMeldung",
+								"Benutzen Sie in Ihrem Password Gross- und Kleinbuchstab, sowie Ziffern.");
 						weiterGehen = false;
 
-					} else if (name.isEmpty() || name.matches("") ) {
+					} else if (name.isEmpty() || name.matches("")) {
 						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
 						weiterGehen = false;
 
@@ -165,7 +167,7 @@ public class Nutzer extends HttpServlet {
 					}
 				}
 
-				else if (id != null && !id.isEmpty()) {
+				else if (id != null) {
 					if (login.matches("admin")) {
 						request.setAttribute("fehlerMeldung", "Sie haben keine Berechtigung, den 'Admin' zu ändern.");
 						weiterGehen = false;

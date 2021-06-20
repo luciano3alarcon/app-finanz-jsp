@@ -19,7 +19,7 @@
 
 	<!-- Navegationsmenü  -->
 	<a href="acessliberado.jsp"> Home </a>
-	<a href="nutzerregistrierung.jsp"> Nutzer registrieren </a>
+	<a href="speichernNutzer?acao=listartodos"> Nutzer registrieren </a>
 	<a href="index.jsp" onclick ="alert('Sie werden abgemeldet.')">Abmelden </a>
 
 
@@ -34,10 +34,8 @@
 	<!-- 	Javascript Validierung -->
 	<form action="produktBearbeitung" method="post" id="formProdukt"
 		onsubmit="return eingabeValidierung() ? true : false">
-
 		
 			<!-- Formular  -->
-
 			<!-- 	 Hier werde ich eine Tabelle erstellen -->
 			<ul class="form-style-1">
 				<li>
