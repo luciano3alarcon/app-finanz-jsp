@@ -95,7 +95,7 @@
 					<!-- Upload von Dateien -->
 					<tr>
 						<td>Bild:</td>
-						<td><input type="file" id="bild" name="bild" value="Bild"   /></td>
+						<td><input type="file" id="uploadBild" name="uploadBild" value="Bild"   /></td>
 					</tr>
 					<tr>
 						<td>Dokument:</td>
@@ -126,6 +126,7 @@
 				<th>Strasse</th>
 				<th>Stadt</th>
 				<th>Bundesland</th>
+				<th>Datei</th>
 				<th>Editieren</th>
 				<th>Löschen</th>
 			</tr>

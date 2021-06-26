@@ -22,7 +22,7 @@ public class DaoNutzer {
 	public void nutzerSpeichernDB(BeanFinanzJsp nutzer) { // Das Objekt Bean hat Login und Passwort
 
 		try {
-			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email, postleitzahl, strasse, stadt, bundesland) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email, postleitzahl, strasse, stadt, bundesland, bildBase64, contentType ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, nutzer.getLogin());
@@ -30,11 +30,12 @@ public class DaoNutzer {
 			insert.setString(3, nutzer.getName());
 			insert.setString(4, nutzer.getRufnummer());
 			insert.setString(5, nutzer.getEmail());
-
 			insert.setString(6, nutzer.getPlz());
 			insert.setString(7, nutzer.getStrasse());
 			insert.setString(8, nutzer.getStadt());
 			insert.setString(9, nutzer.getBundesland());
+			insert.setString(10, nutzer.getBild());
+			insert.setString(11, nutzer.getContentType()); 
 			insert.execute();
 
 			connection.commit();
@@ -66,7 +67,6 @@ public class DaoNutzer {
 			beanFinanzNutzer.setName(resultSet.getString("name"));
 			beanFinanzNutzer.setRufnummer(resultSet.getString("rufnummer"));
 			beanFinanzNutzer.setEmail(resultSet.getString("email"));
-
 			beanFinanzNutzer.setPlz(resultSet.getString("postleitzahl"));
 			beanFinanzNutzer.setStrasse(resultSet.getString("strasse"));
 			beanFinanzNutzer.setStadt(resultSet.getString("stadt"));
@@ -148,7 +148,6 @@ public class DaoNutzer {
 			beanObj.setName(result.getString("name"));
 			beanObj.setRufnummer(result.getString("rufnummer"));
 			beanObj.setEmail(result.getString("email"));
-
 			beanObj.setPlz(result.getString("postleitzahl"));
 			beanObj.setStrasse(result.getString("strasse"));
 			beanObj.setStadt(result.getString("stadt"));
@@ -171,7 +170,6 @@ public class DaoNutzer {
 			statement.setString(4, nutzer.getName());
 			statement.setString(5, nutzer.getRufnummer());
 			statement.setString(6, nutzer.getEmail());
-
 			statement.setString(7, nutzer.getPlz());
 			statement.setString(8, nutzer.getStrasse());
 			statement.setString(9, nutzer.getStadt());

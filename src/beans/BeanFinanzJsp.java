@@ -8,14 +8,33 @@ public class BeanFinanzJsp {
 	private String name;
 	private String rufnummer;
 	private String email;
-	
+
 //	Date für Adresse
 	private String plz;
 	private String strasse;
-	private String stadt; 
+	private String stadt;
 	private String bundesland;
-		
-	
+
+//capture Bild
+	private String bild;
+	private String contentType;
+
+	public String getBild() {
+		return this.bild;
+	}
+
+	public void setBild(String bild) {
+		this.bild = bild;
+	}
+
+	public String getContentType() {
+		return this.contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
 	public String getPlz() {
 		return this.plz;
 	}
@@ -87,13 +106,13 @@ public class BeanFinanzJsp {
 	public String getRufnummer() {
 		return this.rufnummer;
 	}
-	
-	public void setEmail (String email) {
+
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
 	public String getEmail() {
 		return this.email;
 	}
-	
+
 }

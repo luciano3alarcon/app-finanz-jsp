@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.Base64;
 import java.util.List;
 
@@ -12,12 +14,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.Base64;
+import javax.servlet.http.Part;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 
 import beans.BeanFinanzJsp;
 import dao.DaoNutzer;
@@ -103,7 +105,8 @@ public class Nutzer extends HttpServlet {
 			String bundesland = request.getParameter("bundesland");
 
 			BeanFinanzJsp nutzer = new BeanFinanzJsp();
-			//nutzer.setId(id != null || !id.isEmpty() ? Long.parseLong(id) : null);  Code funktioniert nicht.
+			// nutzer.setId(id != null || !id.isEmpty() ? Long.parseLong(id) : null); Code
+			// funktioniert nicht.
 			if (id == null || id.isEmpty()) {
 				nutzer.setId(null);
 			} else {
@@ -123,15 +126,13 @@ public class Nutzer extends HttpServlet {
 
 				if (ServletFileUpload.isMultipartContent(request)) {
 
-					List<FileItem> fileItems = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-
-					for (FileItem fileItem : fileItems) {
-
-						if (fileItem.getFieldName().equals("bild")) {
-							String bild = Base64.getEncoder().encodeToString(fileItem.get());
-							System.out.println(bild);
-						}
-					}
+					Part atribBild = request.getPart("uploadBild");
+					
+					String bildBase64 = Base64.getEncoder()
+							.encodeToString(converteStreamZumByte(atribBild.getInputStream()));
+									
+					nutzer.setBild(bildBase64);
+					nutzer.setContentType(atribBild.getContentType());
 				}
 
 				/* hier wird ein Nutzter erstellt */
@@ -206,6 +207,18 @@ public class Nutzer extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/* Converter eingegangen image Bilddate in byte[] */
+	private byte[] converteStreamZumByte(InputStream imageBild) throws Exception {
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		int reads = imageBild.read();
+		while (reads != -1) {
+			baos.write(reads);
+			reads = imageBild.read();
+		}
+		return baos.toByteArray();
 	}
 
 }
