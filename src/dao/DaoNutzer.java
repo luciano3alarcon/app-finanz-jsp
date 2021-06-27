@@ -22,7 +22,7 @@ public class DaoNutzer {
 	public void nutzerSpeichernDB(BeanFinanzJsp nutzer) { // Das Objekt Bean hat Login und Passwort
 
 		try {
-			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email, postleitzahl, strasse, stadt, bundesland, bildBase64, contentType ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO finappuser(login, passwort, name, rufnummer, email, postleitzahl, strasse, stadt, bundesland, bildbase64, contenttypebild) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, nutzer.getLogin());
@@ -37,7 +37,7 @@ public class DaoNutzer {
 			insert.setString(10, nutzer.getBild());
 			insert.setString(11, nutzer.getContentType()); 
 			insert.execute();
-
+			
 			connection.commit();
 
 		} catch (Exception e) {
@@ -71,6 +71,9 @@ public class DaoNutzer {
 			beanFinanzNutzer.setStrasse(resultSet.getString("strasse"));
 			beanFinanzNutzer.setStadt(resultSet.getString("stadt"));
 			beanFinanzNutzer.setBundesland(resultSet.getString("bundesland"));
+			beanFinanzNutzer.setBild("bildbase64");
+			beanFinanzNutzer.setContentType("contenttypebild");
+			
 			liste.add(beanFinanzNutzer);
 		}
 
@@ -152,6 +155,8 @@ public class DaoNutzer {
 			beanObj.setStrasse(result.getString("strasse"));
 			beanObj.setStadt(result.getString("stadt"));
 			beanObj.setBundesland(result.getString("bundesland"));
+			beanObj.setBild("bildbase64");
+			beanObj.setContentType("contenttypebild");
 
 			return beanObj;
 		}
@@ -160,7 +165,7 @@ public class DaoNutzer {
 
 	public void update(BeanFinanzJsp nutzer) {
 
-		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=?, rufnummer= ?, email= ?, postleitzahl= ?, strasse= ?, stadt= ?, bundesland= ? WHERE  id= "
+		String abfrage = "UPDATE finappuser SET login=?, passwort=?, id = ?, name=?, rufnummer= ?, email= ?, postleitzahl= ?, strasse= ?, stadt= ?, bundesland= ?, bildbase64= ?, contenttypebild= ?  WHERE  id= "
 				+ nutzer.getId() + " ; ";
 		try {
 			PreparedStatement statement = connection.prepareStatement(abfrage);
@@ -174,6 +179,9 @@ public class DaoNutzer {
 			statement.setString(8, nutzer.getStrasse());
 			statement.setString(9, nutzer.getStadt());
 			statement.setString(10, nutzer.getBundesland());
+			statement.setString(11, nutzer.getBild());
+			statement.setString(12, nutzer.getContentType());
+			
 			statement.executeUpdate();
 			connection.commit();
 

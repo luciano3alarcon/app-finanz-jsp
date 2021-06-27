@@ -29,7 +29,7 @@
 
 	<br>
 	<center>
-		<h1>Registrierung</h1>
+		<h1>Nutzer</h1>
 		<!-- 	Fehlermeldung muss angepasst werden -->
 		<h1 style="color: red"; >${fehlerMeldung}</h1>
 
@@ -95,7 +95,7 @@
 					<!-- Upload von Dateien -->
 					<tr>
 						<td>Bild:</td>
-						<td><input type="file" id="uploadBild" name="uploadBild" value="Bild"   /></td>
+						<td><input type="file" id="uploadbild" name="uploadbild" value="Bild"   /></td>
 					</tr>
 					<tr>
 						<td>Dokument:</td>
@@ -126,7 +126,6 @@
 				<th>Strasse</th>
 				<th>Stadt</th>
 				<th>Bundesland</th>
-				<th>Datei</th>
 				<th>Editieren</th>
 				<th>Löschen</th>
 			</tr>

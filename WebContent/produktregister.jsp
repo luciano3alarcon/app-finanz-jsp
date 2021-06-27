@@ -25,7 +25,7 @@
 
 	<br>
 	<center>
-		<h1>Produkt Register</h1>
+		<h1>Produkten</h1>
 
 		<!-- 	Fehlermeldung muss angepasst werden -->
 		<h1 style="color: red"; >${fehlerMeldungProdukt}</h1>

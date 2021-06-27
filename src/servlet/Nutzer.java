@@ -105,13 +105,7 @@ public class Nutzer extends HttpServlet {
 			String bundesland = request.getParameter("bundesland");
 
 			BeanFinanzJsp nutzer = new BeanFinanzJsp();
-			// nutzer.setId(id != null || !id.isEmpty() ? Long.parseLong(id) : null); Code
-			// funktioniert nicht.
-			if (id == null || id.isEmpty()) {
-				nutzer.setId(null);
-			} else {
-				nutzer.setId(Long.parseLong(id));
-			}
+			nutzer.setId((id != null && !id.isEmpty()) ? Long.parseLong(id) : null);
 			nutzer.setLogin(login);
 			nutzer.setPassword(passwort);
 			nutzer.setName(name);
@@ -125,12 +119,9 @@ public class Nutzer extends HttpServlet {
 			try {
 
 				if (ServletFileUpload.isMultipartContent(request)) {
-
-					Part atribBild = request.getPart("uploadBild");
-					
+					Part atribBild = request.getPart("uploadbild");
 					String bildBase64 = Base64.getEncoder()
 							.encodeToString(converteStreamZumByte(atribBild.getInputStream()));
-									
 					nutzer.setBild(bildBase64);
 					nutzer.setContentType(atribBild.getContentType());
 				}
@@ -173,7 +164,7 @@ public class Nutzer extends HttpServlet {
 						request.setAttribute("fehlerMeldung", "Sie haben keine Berechtigung, den 'Admin' zu ändern.");
 						weiterGehen = false;
 
-					} else if (!this.isPassValid.isValidPassword(passwort)) {
+					if (!this.isPassValid.isValidPassword(passwort)) {
 						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
 						weiterGehen = false;
 
