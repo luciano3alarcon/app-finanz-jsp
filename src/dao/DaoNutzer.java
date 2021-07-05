@@ -71,8 +71,8 @@ public class DaoNutzer {
 			beanFinanzNutzer.setStrasse(resultSet.getString("strasse"));
 			beanFinanzNutzer.setStadt(resultSet.getString("stadt"));
 			beanFinanzNutzer.setBundesland(resultSet.getString("bundesland"));
-			beanFinanzNutzer.setBild("bildbase64");
-			beanFinanzNutzer.setContentType("contenttypebild");
+			beanFinanzNutzer.setBild(resultSet.getString("bildbase64"));
+			beanFinanzNutzer.setContentType(resultSet.getString("contenttypebild"));
 			
 			liste.add(beanFinanzNutzer);
 		}
@@ -155,8 +155,8 @@ public class DaoNutzer {
 			beanObj.setStrasse(result.getString("strasse"));
 			beanObj.setStadt(result.getString("stadt"));
 			beanObj.setBundesland(result.getString("bundesland"));
-			beanObj.setBild("bildbase64");
-			beanObj.setContentType("contenttypebild");
+			beanObj.setBild(result.getString("bildbase64"));
+			beanObj.setContentType(result.getString("contenttypebild"));
 
 			return beanObj;
 		}

@@ -106,6 +106,7 @@ public class Nutzer extends HttpServlet {
 
 			BeanFinanzJsp nutzer = new BeanFinanzJsp();
 			nutzer.setId((id != null && !id.isEmpty()) ? Long.parseLong(id) : null);
+
 			nutzer.setLogin(login);
 			nutzer.setPassword(passwort);
 			nutzer.setName(name);
@@ -119,9 +120,12 @@ public class Nutzer extends HttpServlet {
 			try {
 
 				if (ServletFileUpload.isMultipartContent(request)) {
+
 					Part atribBild = request.getPart("uploadbild");
+
 					String bildBase64 = Base64.getEncoder()
 							.encodeToString(converteStreamZumByte(atribBild.getInputStream()));
+
 					nutzer.setBild(bildBase64);
 					nutzer.setContentType(atribBild.getContentType());
 				}
@@ -164,25 +168,27 @@ public class Nutzer extends HttpServlet {
 						request.setAttribute("fehlerMeldung", "Sie haben keine Berechtigung, den 'Admin' zu ändern.");
 						weiterGehen = false;
 
-					if (!this.isPassValid.isValidPassword(passwort)) {
-						request.setAttribute("fehlerMeldung", "Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
-						weiterGehen = false;
+						if (!this.isPassValid.isValidPassword(passwort)) {
+							request.setAttribute("fehlerMeldung",
+									"Benutzen Sie Gross- und Kleinbuchstab, sowie Ziffern.");
+							weiterGehen = false;
 
-					} else if (name.isEmpty()) {
-						request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
-						weiterGehen = false;
+						} else if (name.isEmpty()) {
+							request.setAttribute("fehlerMeldung", "Der Name darf nicht leer bleiben..");
+							weiterGehen = false;
 
-					} else if (!this.checkPhone.isPhoneValid(rufnummer)) {
-						request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
-						weiterGehen = false;
+						} else if (!this.checkPhone.isPhoneValid(rufnummer)) {
+							request.setAttribute("fehlerMeldung", "Überprüfen Sie Ihre Rufnummer");
+							weiterGehen = false;
 
-					} else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
-						request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
-						weiterGehen = false;
+						} else if (!this.ckechEmail.isValidEmailAdresse(email) || email == null || email.isEmpty()) {
+							request.setAttribute("fehlerMeldung", "Diese E-Mailadresse ist ungültig.");
+							weiterGehen = false;
 
-					} else {
-						request.setAttribute("fehlerMeldung", "Die Information wurde aktualisiert.");
-						this.daoNutzer.update(nutzer);
+						} else {
+							request.setAttribute("fehlerMeldung", "Die Information wurde aktualisiert.");
+							this.daoNutzer.update(nutzer);
+						}
 					}
 				}
 

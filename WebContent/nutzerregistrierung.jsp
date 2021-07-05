@@ -91,11 +91,12 @@
 						<td><input type="text" id="rufnummer" name="rufnummer"
 							value="${user.rufnummer}" placeholder="Telefonummer"></td>
 					<tr>
-					
-					<!-- Upload von Dateien -->
+
+						<!-- Upload von Dateien -->
 					<tr>
 						<td>Bild:</td>
-						<td><input type="file" id="uploadbild" name="uploadbild" value="Bild"   /></td>
+						<td><input type="file" id="uploadbild" name="uploadbild"
+							value="Bild" /></td>
 					</tr>
 					<tr>
 						<td>Dokument:</td>
@@ -120,6 +121,7 @@
 				<th>Id</th>
 				<th>Nutzername</th>
 				<th>Name</th>
+				<th>Bild</th>
 				<th>Rufnummer</th>
 				<th>E-Mail</th>
 				<th>PLZ</th>
@@ -134,6 +136,7 @@
 					<td style="width: 150px"><c:out value="${user.id}" /></td>
 					<td style="width: 150px"><c:out value="${user.login}" /></td>
 					<td style="width: 150px"><c:out value="${user.name}" /></td>
+					<td><img src='<c:out value="${user.tempBildUser}"/>' alt="image user" title="image user" width="32px" height="32px"   /></td>
 					<td style="width: 150px"><c:out value="${user.rufnummer}" /></td>
 					<td style="width: 150px"><c:out value="${user.email}" /></td>
 					<td style="width: 150px"><c:out value="${user.plz}" /></td>
@@ -143,11 +146,11 @@
 
 					<td><a href="speichernNutzer?acao=editieren&user=${user.id }"><img
 							title="Editieren" src="resources/img/edit_button.png"
-							width="20px" height="20px"> </a></td>
+							width="20px" height="20px" /> </a></td>
 
 					<td><a href="speichernNutzer?acao=loeschen&user=${user.id}"><img
 							title="Löschen" src="resources/img/delete-button.png"
-							width="20px" height="20px"></a></td>
+							width="20px" height="20px" /></a></td>
 				</tr>
 			</c:forEach>
 		</table>

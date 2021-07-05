@@ -18,7 +18,13 @@ public class BeanFinanzJsp {
 //capture Bild
 	private String bild;
 	private String contentType;
+	private String tempBildUser;
 
+	public String getTempBildUser() {
+		tempBildUser  = "data:" + contentType + ";base64," + bild;
+		return tempBildUser;
+	}	
+	
 	public String getBild() {
 		return this.bild;
 	}
@@ -114,5 +120,4 @@ public class BeanFinanzJsp {
 	public String getEmail() {
 		return this.email;
 	}
-
 }
