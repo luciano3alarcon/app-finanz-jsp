@@ -136,7 +136,9 @@
 					<td style="width: 150px"><c:out value="${user.id}" /></td>
 					<td style="width: 150px"><c:out value="${user.login}" /></td>
 					<td style="width: 150px"><c:out value="${user.name}" /></td>
-					<td><img src='<c:out value="${user.tempBildUser}"/>' alt="image user" title="image user" width="32px" height="32px"   /></td>
+					<td><a href="speichernNutzer?acao=download&user=${user.id }">
+							<img src='<c:out value="${user.tempBildUser}"/>' alt="image user"
+							title="image user" width="32px" height="32px" /></td>
 					<td style="width: 150px"><c:out value="${user.rufnummer}" /></td>
 					<td style="width: 150px"><c:out value="${user.email}" /></td>
 					<td style="width: 150px"><c:out value="${user.plz}" /></td>

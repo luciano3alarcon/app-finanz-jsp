@@ -32,10 +32,10 @@ import validator.IsPasswordValid;
 public class Nutzer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	DaoNutzer daoNutzer = new DaoNutzer();
-	IsPasswordValid isPassValid = new IsPasswordValid();
 	CheckEmail ckechEmail = new CheckEmail();
 	CheckPhone checkPhone = new CheckPhone();
+	DaoNutzer daoNutzer = new DaoNutzer();
+	IsPasswordValid isPassValid = new IsPasswordValid();
 
 	public Nutzer() {
 		super();
@@ -70,6 +70,16 @@ public class Nutzer extends HttpServlet {
 				RequestDispatcher view = request.getRequestDispatcher("/nutzerregistrierung.jsp");
 				request.setAttribute("liste", this.daoNutzer.aufgelisteteNutzer());
 				view.forward(request, response);
+				
+			}else if(acao.equalsIgnoreCase("download") ) {
+				
+				// Für einen direkten Download eines Bildes
+				BeanFinanzJsp nutzer = new BeanFinanzJsp();
+				if(nutzer != null) {
+					
+					response.setHeader("Content-Disposition", "attachament; archiv." + nutzer.getContentType().split("\\/")[1]);
+										
+				}
 			}
 
 		} catch (Exception e) {
